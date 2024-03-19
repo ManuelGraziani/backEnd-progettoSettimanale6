@@ -1,8 +1,12 @@
+@section('title', 'Corsi')
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Corsi') }}
-        </h2>
+    <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Corsi') }}
+            </h2>
+            <a href="{{ route('courses.create') }}" class="btn btn-outline-secondary">Aggiungi Progetti</a>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -17,7 +21,7 @@
                                 <div class="card-body">
                                     <h2 class="card-title fs-5 fw-bold">{{$course->name}}</h2>
                                     <p class="card-text">{{$course->description}}</p>
-                                    <a href="{{route('courses.show', $course->id)}}" class="btn btn-primary">Go somewhere</a>
+                                    <a href="{{route('courses.show', $course->id)}}" class="btn btn-outline-secondary">Dettagli</a>
                                 </div>
                             </div>
 

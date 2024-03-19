@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,3 +34,5 @@ require __DIR__.'/auth.php';
 
 Route::resource('/courses', CourseController::class)->middleware('auth', 'verified');
 Route::get('/courses', [CourseController::class, 'index'])->name('courses');
+
+Route::resource('/reservations', ReservationController::class)->middleware('auth', 'verified');

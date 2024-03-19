@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('course_id');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade')->onUpdate('cascade');
-            $table->date('date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->boolean('pending');
             $table->timestamps();
         });

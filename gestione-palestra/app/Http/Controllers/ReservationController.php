@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
+use App\Models\Course;
 use App\Models\Reservation;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
@@ -29,7 +32,16 @@ class ReservationController extends Controller
      */
     public function store(StoreReservationRequest $request)
     {
-        //
+
+        $user = Auth::user();
+        $reservation = new Reservation();
+        $reservation->course_id = $request->course_id;
+        $reservation->user_id = User::where('id', $user->id)->first()->id;
+        $reservation->start_date = $request->start_date;
+        $reservation->end_date = $request->end_date;
+        $reservation->pending = true;
+        $reservation->save();
+        return redirect('/courses/' . $request->course_id);
     }
 
     /**

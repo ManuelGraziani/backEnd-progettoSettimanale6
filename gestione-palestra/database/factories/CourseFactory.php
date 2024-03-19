@@ -16,15 +16,15 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
-        $date = $this->faker->dateTimeBetween('now', '+1 year');
+        $date = $this->faker->dateTimeBetween('now', '30 days');
         $dateEnd  = clone $date;
-        $dateEnd->modify('+1 hour');
+        $dateEnd->modify('+7 days');
         $corsi = ['Pugilato', 'Aerobica', 'Pilates', 'Yoga'];
         return [
             'name' => $corsi[array_rand($corsi)],
             'description' => $this->faker->text(),
             'start_date' => $date,
-            'end_date' => $date
+            'end_date' => $dateEnd
         ];
     }
 }
