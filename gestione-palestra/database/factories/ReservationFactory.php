@@ -21,7 +21,8 @@ class ReservationFactory extends Factory
         return [
             'user_id' => User::get()->random()->id,
             'course_id' => Course::get()->random()->id,
-            'date' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
+            'start_date' => now(),
+            'end_date' => now()->addDays(7),
             'pending' => true
         ];
     }

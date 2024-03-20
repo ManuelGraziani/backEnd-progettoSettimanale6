@@ -2,9 +2,14 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dettaglio corso') }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Corsi') }}
+            </h2>
+            @if(Auth::user()->is_admin == 1)
+            <a href="{{ route('courses.create') }}" class="btn btn-outline-secondary">Aggiungi Corsi</a>
+            @endif
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -19,13 +24,29 @@
                         <p class="fs-5">Data inizio: {{ $course->start_date }}</p>
                         <p class="fs-5">Data fine: {{ $course->end_date }}</p>
                     </div>
-                    <form method="POST" action="/reservations">
-                        @csrf
-                        <input type="hidden" name="course_id" value="{{ $course->id }}">
-                        <input type="hidden" name="start_date" value="{{ $course->start_date }}">
-                        <input type="hidden" name="end_date" value="{{ $course->end_date }}">
-                        <button type="submit" class="btn btn-outline-secondary">Iscriviti al corso</button>
-                    </form>
+                    <div class="mt-3">
+                        @if ($user -> is_admin == 0)
+                        <form method="POST" action="/reservations">
+                            @csrf
+                            <input type="hidden" name="course_id" value="{{ $course->id }}">
+                            <input type="hidden" name="start_date" value="{{ $course->start_date }}">
+                            <input type="hidden" name="end_date" value="{{ $course->end_date }}">
+
+                            <button type="submit" class="btn btn-outline-secondary">Iscriviti al corso</button>
+                        </form>
+                        @elseif ( $user -> is_admin == 0)
+                        <form method="POST" action="/reservations/{{ $reservation->id }}">
+                            @csrf
+                            @method ('PUT')
+                            <input type="hidden" name="course_id" value="{{ $course->id }}">
+                            <input type="hidden" name="start_date" value="{{ $course->start_date }}">
+                            <input type="hidden" name="end_date" value="{{ $course->end_date }}">
+                            <button type="submit" class="btn btn-outline-danger">Annulla iscrizione</button>
+                        </form>
+                        @endif
+
+                    </div>
+
                 </div>
             </div>
         </div>

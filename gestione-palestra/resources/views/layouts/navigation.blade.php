@@ -18,6 +18,11 @@
                     <x-nav-link :href="route('courses')" :active="request()->routeIs('courses')">
                         {{ __('Corsi') }}
                     </x-nav-link>
+                    @if (Auth::user()->is_admin == 1)
+                    <x-nav-link :href="route('reservations.index')" :active="request()->routeIs('reservations.index')">
+                        {{ __('Prenotazioni') }}
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 

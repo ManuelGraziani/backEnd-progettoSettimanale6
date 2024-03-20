@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
+use App\Models\Reservation;
 
 class CourseController extends Controller
 {
@@ -42,9 +43,11 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
+    public function show(Course $course, Reservation $reservation)
     {
-        return view('course_detail', ['course' => $course]);
+        $user = auth()->user();
+        $reservation = $reservation->where('course_id', $course->id)->where('user_id', $user->id)->first();
+        return view('course_detail', ['course' => $course, 'reservation' => $reservation], ['user' => $user]);
     }
 
     /**
@@ -52,7 +55,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        return view('course_edit', ['course' => $course]);
     }
 
     /**
@@ -60,7 +63,12 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        $course->name = $request->name;
+        $course->description = $request->description;
+        $course->start_date = $request->start_date;
+        $course->end_date = $request->end_date;
+        $course->save();
+        return redirect('/courses');
     }
 
     /**
@@ -68,6 +76,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+        return redirect('/courses');
     }
 }

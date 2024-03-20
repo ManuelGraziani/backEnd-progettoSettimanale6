@@ -4,14 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Reservation extends Model
 {
     use HasFactory;
 
-    public function courses(): BelongsToMany
+    public function user(): BelongsTo
     {
-        return $this->BelongsToMany(Course::class);
+        return $this->BelongsTo(User::class);
+    }
+
+    public function course(): HasMany
+    {
+        return $this->HasMany(Course::class);
     }
 }

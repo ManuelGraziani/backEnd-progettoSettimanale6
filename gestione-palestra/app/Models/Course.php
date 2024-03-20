@@ -10,9 +10,9 @@ class Course extends Model
 {
     use HasFactory;
 
-    public function users(): BelongsToMany
+    public function reservations(): BelongsToMany
     {
-        return $this->BelongsToMany(User::class);
+        return $this->BelongsToMany(Reservation::class);
         
     }
 }

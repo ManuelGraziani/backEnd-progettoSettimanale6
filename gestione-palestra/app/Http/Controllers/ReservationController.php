@@ -16,7 +16,9 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $reservations = Reservation::all();
+        return view('reservations', ['reservations' => $reservations, 'user' => $user]);
     }
 
     /**
@@ -65,7 +67,7 @@ class ReservationController extends Controller
      */
     public function update(UpdateReservationRequest $request, Reservation $reservation)
     {
-        //
+        
     }
 
     /**
@@ -73,6 +75,7 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        //
+        $reservation->delete();
+        return redirect('/courses/' . $reservation->course_id);
     }
 }
