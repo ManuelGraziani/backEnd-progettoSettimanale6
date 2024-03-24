@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -45,7 +46,7 @@ class CourseController extends Controller
      */
     public function show(Course $course, Reservation $reservation)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $reservation = $reservation->where('course_id', $course->id)->where('user_id', $user->id)->first();
         return view('course_detail', ['course' => $course, 'reservation' => $reservation], ['user' => $user]);
     }
